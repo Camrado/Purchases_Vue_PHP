@@ -6,6 +6,12 @@ class Category {
   public $name;
   public $description;
 
+  public function __construct($category) {
+    $this->ID = (int)$category["ID"];
+    $this->name = $category["Name"];
+    $this->description = $category["Description"];
+  }
+
   // ID
   public function getId() {
     return $this->ID;

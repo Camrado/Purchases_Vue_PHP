@@ -18,16 +18,7 @@ class PurchaseRepository implements IPurchaseRepository {
     $purchasesArr = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $purchase = new Purchase();
-
-      $purchase->setId((int)$row["ID"]);
-      $purchase->setDate($row["Date"]);
-      $purchase->setItem($row["Item"]);
-      $purchase->setCategory($row["Category"]);
-      $purchase->setPrice((float)$row["Price"]);
-      $purchase->setQuantity((int)$row["Quantity"]);
-      $purchase->setTotalPrice((float)$row["Total_price"]);
-
+      $purchase = new Purchase($row);
       array_push($purchasesArr, $purchase);
     }
 
@@ -38,16 +29,10 @@ class PurchaseRepository implements IPurchaseRepository {
     $stmt = $this->conn->prepare("SELECT * FROM purchases_table WHERE ID = :id");
     $stmt->bindParam(":id", $id);
     $stmt->execute();
-    $purchase = new Purchase();
+    $purchase = null;
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $purchase->setId((int)$row["ID"]);
-      $purchase->setDate($row["Date"]);
-      $purchase->setItem($row["Item"]);
-      $purchase->setCategory($row["Category"]);
-      $purchase->setPrice((float)$row["Price"]);
-      $purchase->setQuantity((int)$row["Quantity"]);
-      $purchase->setTotalPrice((float)$row["Total_price"]);
+      $purchase = new Purchase($row);
     }
 
     return $purchase;

@@ -18,12 +18,7 @@ class CategoryRepository implements ICategoryRepository {
     $categoriesArr = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $category = new Category();
-
-      $category->setId((int)$row["ID"]);
-      $category->setName($row["Name"]);
-      $category->setDescription($row["Description"]);
-
+      $category = new Category($row);
       array_push($categoriesArr, $category);
     }
 
@@ -34,12 +29,10 @@ class CategoryRepository implements ICategoryRepository {
     $stmt = $this->conn->prepare("SELECT * FROM purchases_categories WHERE ID = :id");
     $stmt->bindParam(":id", $id);
     $stmt->execute();
-    $category = new Category();
+    $category = null;
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $category->setId((int)$row["ID"]);
-      $category->setName($row["Name"]);
-      $category->setDescription($row["Description"]);
+      $category = new Category($row);
     }
 
     return $category;

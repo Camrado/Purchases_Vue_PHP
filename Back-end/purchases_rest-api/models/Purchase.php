@@ -10,6 +10,16 @@ class Purchase {
   public $quantity;
   public $total_price;
 
+  public function __construct($purchase) {
+    $this->ID = (int)$purchase["ID"];
+    $this->date = $purchase["Date"];
+    $this->category = $purchase["Category"];
+    $this->item = $purchase["Item"];
+    $this->price = (float)$purchase["Price"];
+    $this->quantity = (int)$purchase["Quantity"];
+    $this->total_price = (float)$purchase["Total_price"];
+  }
+
   // ID
   public function getId() {
     return $this->ID;
