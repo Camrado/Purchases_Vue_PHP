@@ -13,11 +13,6 @@ $purchaseRepo = new PurchaseRepository();
 
 $data = json_decode(file_get_contents("php://input"));
 
-$purchase = new Purchase();
-$purchase->setDate($data->date);
-$purchase->setCategory($data->category);
-$purchase->setItem($data->item);
-$purchase->setPrice($data->price);
-$purchase->setQuantity($data->quantity);
+$purchase = new Purchase($data);
 
 echo $purchaseRepo->insert($purchase);

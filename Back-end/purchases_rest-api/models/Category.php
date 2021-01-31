@@ -7,9 +7,15 @@ class Category {
   public $description;
 
   public function __construct($category) {
-    $this->ID = (int)$category["ID"];
-    $this->name = $category["Name"];
-    $this->description = $category["Description"];
+    if (is_array($category)) {
+      $this->ID = (int)$category["ID"];
+      $this->name = $category["Name"];
+      $this->description = $category["Description"];
+    } else if (is_object($category)) {
+      $this->ID = (int)$category->ID;
+      $this->name = $category->name;
+      $this->description = $category->description;
+    }
   }
 
   // ID

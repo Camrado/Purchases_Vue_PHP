@@ -11,13 +11,23 @@ class Purchase {
   public $total_price;
 
   public function __construct($purchase) {
-    $this->ID = (int)$purchase["ID"];
-    $this->date = $purchase["Date"];
-    $this->category = $purchase["Category"];
-    $this->item = $purchase["Item"];
-    $this->price = (float)$purchase["Price"];
-    $this->quantity = (int)$purchase["Quantity"];
-    $this->total_price = (float)$purchase["Total_price"];
+    if (is_array($purchase)) {
+      $this->ID = (int)$purchase["ID"];
+      $this->date = $purchase["Date"];
+      $this->category = $purchase["Category"];
+      $this->item = $purchase["Item"];
+      $this->price = (float)$purchase["Price"];
+      $this->quantity = (int)$purchase["Quantity"];
+      $this->total_price = (float)$purchase["Total_price"];
+    } else if (is_object($purchase)) {
+      $this->ID = (int)$purchase->ID;
+      $this->date = $purchase->date;
+      $this->category = $purchase->category;
+      $this->item = $purchase->item;
+      $this->price = (float)$purchase->price;
+      $this->quantity = (int)$purchase->quantity;
+      $this->total_price = (float)$purchase->total_price;
+    }
   }
 
   // ID

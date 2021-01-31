@@ -13,9 +13,6 @@ $categoryRepo = new CategoryRepository();
 
 $data = json_decode(file_get_contents("php://input"));
 
-$category = new Category();
-$category->setId($data->ID);
-$category->setName($data->name);
-$category->setDescription($data->description);
+$category = new Category($data);
 
 echo $categoryRepo->update($category);
