@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () => import(/* webpackChunkName: "home" */ "@/views/Home.vue"),
     meta: {
       title: "Home page",
     },
@@ -24,14 +23,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "categories" */ "@/views/Categories.vue"),
     meta: {
       title: "Categories page",
-    },
-  },
-  {
-    path: "/modaltest",
-    name: "ModalTest1",
-    component: () => import(/* webpackChunkName: "modaltest" */ "@/views/ModalTest1.vue"),
-    meta: {
-      title: "Modal Test",
     },
   },
 ];
