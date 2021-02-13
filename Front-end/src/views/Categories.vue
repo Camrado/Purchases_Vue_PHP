@@ -47,24 +47,24 @@
 </template>
 
 <script>
-import CategoriesTable from "@/components/Categories/CategoriesTable.vue";
-import InsertBtn from "@/components/Categories/insertBtn.vue";
-import { reactive } from "vue";
+import CategoriesTable from '@/components/Categories/CategoriesTable.vue';
+import InsertBtn from '@/components/Categories/insertBtn.vue';
+import { reactive } from 'vue';
 
 export default {
-  name: "Categories",
+  name: 'Categories',
   components: { CategoriesTable, InsertBtn },
 
   setup() {
     const state = reactive({
-      searchInput: "",
-      pageSize: 10,
+      searchInput: '',
+      pageSize: 10
     });
 
     return {
-      state,
+      state
     };
-  },
+  }
 };
 </script>
 

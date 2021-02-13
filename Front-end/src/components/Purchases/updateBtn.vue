@@ -93,18 +93,18 @@
 </template>
 
 <script>
-import { computed, reactive, watch } from "vue";
-import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
+import { computed, reactive, watch } from 'vue';
+import { useStore } from 'vuex';
+import { useToast } from 'vue-toastification';
 
 export default {
-  name: "updateBtn",
+  name: 'updateBtn',
 
   props: {
     ID: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
 
   setup(props) {
@@ -122,24 +122,24 @@ export default {
           item: state.form[2],
           price: state.form[3],
           quantity: state.form[4],
-          total_price: 0,
+          total_price: 0
         };
       }),
       invalidClassName: {
-        "is-invalid": false,
+        'is-invalid': false
       },
       invalidClassPrice: {
-        "is-invalid": false,
+        'is-invalid': false
       },
       invalidClassQty: {
-        "is-invalid": false,
+        'is-invalid': false
       },
-      categories: computed(() => store.getters["CategoriesTable/GET_CONTENT"]),
+      categories: computed(() => store.getters['CategoriesTable/GET_CONTENT'])
     });
 
     async function getPurchaseAndSetValues() {
-      const response = await fetch(store.getters["PurchasesTable/GET_URL"] + `/read_single.php?id=${props.ID}`, {
-        method: "GET",
+      const response = await fetch(store.getters['PurchasesTable/GET_URL'] + `/read_single.php?id=${props.ID}`, {
+        method: 'GET'
       });
       const purchase = await response.json();
 
@@ -159,9 +159,9 @@ export default {
       //Callback
       (newShowModal) => {
         if (newShowModal) {
-          document.getElementsByTagName("body")[0].style = "overflow-y: hidden;";
+          document.getElementsByTagName('body')[0].style = 'overflow-y: hidden;';
         } else {
-          document.getElementsByTagName("body")[0].style = "overflow-y: scroll;";
+          document.getElementsByTagName('body')[0].style = 'overflow-y: scroll;';
         }
       }
     );
@@ -170,23 +170,23 @@ export default {
     async function updatePurchase(jsonObject) {
       const YPosition = window.pageYOffset;
       try {
-        toast.info("Updating...");
+        toast.info('Updating...');
 
-        const response = await fetch(store.getters["PurchasesTable/GET_URL"] + "/update.php", {
-          method: "PUT",
+        const response = await fetch(store.getters['PurchasesTable/GET_URL'] + '/update.php', {
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(jsonObject),
+          body: JSON.stringify(jsonObject)
         });
 
         const message = await response.text();
         toast.success(message);
       } catch {
-        toast.error("Something went wrong");
+        toast.error('Something went wrong');
       } finally {
         state.showModal = false;
-        await store.dispatch("PurchasesTable/SELECT_DATA");
+        await store.dispatch('PurchasesTable/SELECT_DATA');
         window.scrollTo(0, YPosition);
       }
     }
@@ -195,8 +195,8 @@ export default {
     watch(
       () => state.form[2],
       (newInput) => {
-        if (!/^[a-zA-Z\s]*$/.test(newInput) && newInput) state.invalidClassName["is-invalid"] = true;
-        else state.invalidClassName["is-invalid"] = false;
+        if (!/^[a-zA-Z\s]*$/.test(newInput) && newInput) state.invalidClassName['is-invalid'] = true;
+        else state.invalidClassName['is-invalid'] = false;
       }
     );
 
@@ -205,8 +205,8 @@ export default {
       () => state.form[3],
       (newInput) => {
         if (!/^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,2}$/.test(newInput) && newInput)
-          state.invalidClassPrice["is-invalid"] = true;
-        else state.invalidClassPrice["is-invalid"] = false;
+          state.invalidClassPrice['is-invalid'] = true;
+        else state.invalidClassPrice['is-invalid'] = false;
       }
     );
 
@@ -214,17 +214,17 @@ export default {
     watch(
       () => state.form[4],
       (newInput) => {
-        if (!/^[1-9]\d*$/.test(newInput) && newInput) state.invalidClassQty["is-invalid"] = true;
-        else state.invalidClassQty["is-invalid"] = false;
+        if (!/^[1-9]\d*$/.test(newInput) && newInput) state.invalidClassQty['is-invalid'] = true;
+        else state.invalidClassQty['is-invalid'] = false;
       }
     );
 
     return {
       state,
       updatePurchase,
-      getPurchaseAndSetValues,
+      getPurchaseAndSetValues
     };
-  },
+  }
 };
 </script>
 

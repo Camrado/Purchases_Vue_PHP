@@ -3,13 +3,13 @@
     <div class="row align-items-center">
       <div class="col">
         <div class="form-group d-flex align-items-center justify-content-center">
-            <p class="m-0">Show purchases from</p>
-            <input type="date" class="form-control mx-3 w-25" v-model="state.fromDate" />
-            <p class="m-0">to</p>
-            <input type="date" class="form-control mx-3 w-25" v-model="state.toDate" id="toDate" />
-            <button class="btn btn-info px-3" @click="reloadTable()">
-              Submit
-            </button>
+          <p class="m-0">Show purchases from</p>
+          <input type="date" class="form-control mx-3 w-25" v-model="state.fromDate" />
+          <p class="m-0">to</p>
+          <input type="date" class="form-control mx-3 w-25" v-model="state.toDate" />
+          <button class="btn btn-info px-3" @click="reloadTable()">
+            Submit
+          </button>
         </div>
       </div>
     </div>
@@ -31,8 +31,8 @@
       <div class="col text-right">
         <div class="form-group mb-0">
           <span>Show </span>
-          <span
-            ><select
+          <span>
+            <select
               name="purchases_length"
               v-model.number="state.pageSize"
               class="custom-select custom-select-sm form-control form-control-sm"
@@ -42,8 +42,8 @@
               <option value="25">25</option>
               <option value="50">50</option>
               <option value="100">100</option>
-            </select></span
-          >
+            </select>
+          </span>
           <span> purchases</span>
         </div>
       </div>
@@ -66,19 +66,19 @@
 </template>
 
 <script>
-import PurchasesTable from "@/components/Purchases/PurchasesTable.vue";
-import InsertBtn from "@/components/Purchases/insertBtn.vue";
-import { useStore } from "vuex";
-import { onMounted, reactive } from "vue";
+import PurchasesTable from '@/components/Purchases/PurchasesTable.vue';
+import InsertBtn from '@/components/Purchases/insertBtn.vue';
+import { useStore } from 'vuex';
+import { onMounted, reactive } from 'vue';
 
 export default {
-  name: "Purchase",
+  name: 'Purchase',
   components: { PurchasesTable, InsertBtn },
 
   setup() {
     const store = useStore();
     const state = reactive({
-      searchInput: "",
+      searchInput: '',
       pageSize: 10,
       fromDate: null,
       toDate: null,
@@ -97,9 +97,9 @@ export default {
     async function reloadTable() {
       state.showLoading = true;
       try {
-        await store.dispatch("FromAndToDate/SET_DATE", { fromDate: state.fromDate, toDate: state.toDate });
-        if(!state.showContent) state.showContent = true;
-        await store.dispatch("PurchasesTable/SELECT_DATA");
+        await store.dispatch('FromAndToDate/SET_DATE', { fromDate: state.fromDate, toDate: state.toDate });
+        if (!state.showContent) state.showContent = true;
+        await store.dispatch('PurchasesTable/SELECT_DATA');
       } catch {
         state.showErrorMessage = true;
       }
@@ -108,21 +108,21 @@ export default {
 
     function formatDate(date) {
       let d = new Date(date),
-        month = "" + (d.getMonth() + 1),
-        day = "" + d.getDate(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
         year = d.getFullYear();
 
-      if (month.length < 2) month = "0" + month;
-      if (day.length < 2) day = "0" + day;
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
 
-      return [year, month, day].join("-");
+      return [year, month, day].join('-');
     }
 
     return {
       state,
-      reloadTable,
+      reloadTable
     };
-  },
+  }
 };
 </script>
 

@@ -68,46 +68,46 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive, watch } from "vue";
-import { useStore } from "vuex";
-import updateBtn from "@/components/Categories/updateBtn.vue";
-import deleteBtn from "@/components/Categories/deleteBtn.vue";
+import { computed, onMounted, reactive, watch } from 'vue';
+import { useStore } from 'vuex';
+import updateBtn from '@/components/Categories/updateBtn.vue';
+import deleteBtn from '@/components/Categories/deleteBtn.vue';
 
 export default {
-  name: "CategoriesTable",
+  name: 'CategoriesTable',
   components: { updateBtn, deleteBtn },
 
   props: {
     searchInput: {
       type: String,
-      required: false,
+      required: false
     },
     pageSizeProp: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
 
   setup(props) {
     const store = useStore();
-    const content = computed(() => store.getters["CategoriesTable/GET_CONTENT"]);
+    const content = computed(() => store.getters['CategoriesTable/GET_CONTENT']);
 
     const state = reactive({
-      currentSort: "name",
-      currentSortDir: "asc",
+      currentSort: 'name',
+      currentSortDir: 'asc',
       pageSize: computed(() => {
         state.currentPage = 1;
         return props.pageSizeProp;
       }),
       currentPage: 1,
       showLoading: true,
-      showErrorMessage: false,
+      showErrorMessage: false
     });
 
     onMounted(async () => {
       try {
         state.showLoading = true;
-        await store.dispatch("CategoriesTable/SELECT_DATA");
+        await store.dispatch('CategoriesTable/SELECT_DATA');
       } catch {
         state.showErrorMessage = true;
       } finally {
@@ -118,11 +118,11 @@ export default {
     function sort(s) {
       if (s === state.currentSort) {
         //Change direction
-        state.currentSortDir = state.currentSortDir === "asc" ? "desc" : "asc";
+        state.currentSortDir = state.currentSortDir === 'asc' ? 'desc' : 'asc';
       } else {
         //Set currentSort to the clicked one
         state.currentSort = s;
-        state.currentSortDir = "asc";
+        state.currentSortDir = 'asc';
       }
       state.currentPage = 1;
     }
@@ -139,7 +139,7 @@ export default {
           //Sort filter
           .sort((a, b) => {
             let modifier = 1;
-            if (state.currentSortDir === "desc") modifier = -1;
+            if (state.currentSortDir === 'desc') modifier = -1;
             if (a[state.currentSort] < b[state.currentSort]) return -1 * modifier;
             if (a[state.currentSort] > b[state.currentSort]) return modifier;
             return 0;
@@ -202,9 +202,9 @@ export default {
       setPage,
       pageNums,
       state,
-      sortedForSearchContent,
+      sortedForSearchContent
     };
-  },
+  }
 };
 </script>
 

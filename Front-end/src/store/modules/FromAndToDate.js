@@ -3,25 +3,25 @@ export const FromAndToDate = {
 
   state: {
     fromAndTo: {
-      fromDate: "2020-12-17",
-      toDate: "2021-01-09",
-    },
+      fromDate: '',
+      toDate: ''
+    }
   },
 
   mutations: {
     SET_DATE_MUTATION(state, { fromDate, toDate }) {
       state.fromAndTo.fromDate = fromDate;
       state.fromAndTo.toDate = toDate;
-    },
+    }
   },
 
   actions: {
     SET_DATE({ commit }, fromAndToDate) {
-      commit("SET_DATE_MUTATION", fromAndToDate);
-    },
+      commit('SET_DATE_MUTATION', fromAndToDate);
+    }
   },
 
   getters: {
-    GET_DATE: (state) => state.fromAndTo,
-  },
+    GET_DATE: (state) => state.fromAndTo
+  }
 };

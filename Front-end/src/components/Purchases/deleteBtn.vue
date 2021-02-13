@@ -23,18 +23,18 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
-import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
+import { ref, watch } from 'vue';
+import { useStore } from 'vuex';
+import { useToast } from 'vue-toastification';
 
 export default {
-  name: "deleteBtn",
+  name: 'deleteBtn',
 
   props: {
     ID: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
 
   setup(props) {
@@ -49,9 +49,9 @@ export default {
       //Callback
       (newShowModal) => {
         if (newShowModal) {
-          document.getElementsByTagName("body")[0].style = "overflow-y: hidden;";
+          document.getElementsByTagName('body')[0].style = 'overflow-y: hidden;';
         } else {
-          document.getElementsByTagName("body")[0].style = "overflow-y: scroll;";
+          document.getElementsByTagName('body')[0].style = 'overflow-y: scroll;';
         }
       }
     );
@@ -60,28 +60,28 @@ export default {
     async function deletePurchase() {
       const YPosition = window.pageYOffset;
       try {
-        toast.info("Deleting...");
+        toast.info('Deleting...');
 
-        const response = await fetch(store.getters["PurchasesTable/GET_URL"] + `/delete.php?id=${props.ID}`, {
-          method: "DELETE",
+        const response = await fetch(store.getters['PurchasesTable/GET_URL'] + `/delete.php?id=${props.ID}`, {
+          method: 'DELETE'
         });
 
         const message = await response.text();
         toast.success(message);
       } catch {
-        toast.error("Something went wrong.");
+        toast.error('Something went wrong.');
       } finally {
         showModal.value = false;
-        await store.dispatch("PurchasesTable/SELECT_DATA");
+        await store.dispatch('PurchasesTable/SELECT_DATA');
         window.scrollTo(0, YPosition);
       }
     }
 
     return {
       showModal,
-      deletePurchase,
+      deletePurchase
     };
-  },
+  }
 };
 </script>
 

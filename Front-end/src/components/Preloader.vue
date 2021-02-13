@@ -6,14 +6,14 @@
 
 <script>
 export default {
-  name: "Preloader",
+  name: 'Preloader',
 
   setup() {
-    window.addEventListener("load", function() {
-      const loader = document.querySelector(".loader");
-      loader.className += " hidden"; //? "loader hidden"
+    window.addEventListener('load', function() {
+      const loader = document.querySelector('.loader');
+      loader.className += ' hidden'; //? "loader hidden"
     });
-  },
+  }
 };
 </script>
 
@@ -33,7 +33,7 @@ export default {
   &__image {
     width: 800px;
     height: 600px;
-    background-image: url("../assets/img/loader.gif");
+    background-image: url('../assets/img/loader.gif');
     background-size: cover;
     background-repeat: no-repeat;
   }

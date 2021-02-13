@@ -60,18 +60,18 @@
 </template>
 
 <script>
-import { computed, reactive, watch } from "vue";
-import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
+import { computed, reactive, watch } from 'vue';
+import { useStore } from 'vuex';
+import { useToast } from 'vue-toastification';
 
 export default {
-  name: "updateBtn",
+  name: 'updateBtn',
 
   props: {
     ID: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
 
   setup(props) {
@@ -85,20 +85,20 @@ export default {
         return {
           ID: props.ID,
           name: state.form[0],
-          description: state.form[1],
+          description: state.form[1]
         };
       }),
       invalidClassName: {
-        "is-invalid": false,
+        'is-invalid': false
       },
       invalidClassDescription: {
-        "is-invalid": false,
-      },
+        'is-invalid': false
+      }
     });
 
     async function getPurchaseAndSetValues() {
-      const response = await fetch(store.getters["CategoriesTable/GET_URL"] + `/read_single.php?id=${props.ID}`, {
-        method: "GET",
+      const response = await fetch(store.getters['CategoriesTable/GET_URL'] + `/read_single.php?id=${props.ID}`, {
+        method: 'GET'
       });
       const purchase = await response.json();
 
@@ -115,9 +115,9 @@ export default {
       //Callback
       (newShowModal) => {
         if (newShowModal) {
-          document.getElementsByTagName("body")[0].style = "overflow-y: hidden;";
+          document.getElementsByTagName('body')[0].style = 'overflow-y: hidden;';
         } else {
-          document.getElementsByTagName("body")[0].style = "overflow-y: scroll;";
+          document.getElementsByTagName('body')[0].style = 'overflow-y: scroll;';
         }
       }
     );
@@ -126,23 +126,23 @@ export default {
     async function updateCategory(jsonObject) {
       const YPosition = window.pageYOffset;
       try {
-        toast.info("Updating...");
+        toast.info('Updating...');
 
-        const response = await fetch(store.getters["CategoriesTable/GET_URL"] + "/update.php", {
-          method: "PUT",
+        const response = await fetch(store.getters['CategoriesTable/GET_URL'] + '/update.php', {
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(jsonObject),
+          body: JSON.stringify(jsonObject)
         });
 
         const message = await response.text();
         toast.success(message);
       } catch {
-        toast.error("Something went wrong");
+        toast.error('Something went wrong');
       } finally {
         state.showModal = false;
-        await store.dispatch("CategoriesTable/SELECT_DATA");
+        await store.dispatch('CategoriesTable/SELECT_DATA');
         window.scrollTo(0, YPosition);
       }
     }
@@ -151,8 +151,8 @@ export default {
     watch(
       () => state.form[0],
       (newInput) => {
-        if (!/^[a-zA-Z\s]*$/.test(newInput) && newInput) state.invalidClassName["is-invalid"] = true;
-        else state.invalidClassName["is-invalid"] = false;
+        if (!/^[a-zA-Z\s]*$/.test(newInput) && newInput) state.invalidClassName['is-invalid'] = true;
+        else state.invalidClassName['is-invalid'] = false;
       }
     );
 
@@ -160,17 +160,17 @@ export default {
     watch(
       () => state.form[1],
       (newInput) => {
-        if (!/^[a-zA-Z0-9,.!? ]*$/.test(newInput) && newInput) state.invalidClassDescription["is-invalid"] = true;
-        else state.invalidClassDescription["is-invalid"] = false;
+        if (!/^[a-zA-Z0-9,.!? ]*$/.test(newInput) && newInput) state.invalidClassDescription['is-invalid'] = true;
+        else state.invalidClassDescription['is-invalid'] = false;
       }
     );
 
     return {
       state,
       updateCategory,
-      getPurchaseAndSetValues,
+      getPurchaseAndSetValues
     };
-  },
+  }
 };
 </script>
 

@@ -42,10 +42,10 @@
           </div>
         </th>
         <th class="tableTh">
-            Price
+          Price
         </th>
         <th class="tableTh">
-            Quantity
+          Quantity
         </th>
         <th @click="sort('total_price')" class="tableTh">
           <div class="d-flex justify-content-between">
@@ -109,53 +109,53 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive, watch } from "vue";
-import { useStore } from "vuex";
-import updateBtn from "@/components/Purchases/updateBtn.vue";
-import deleteBtn from "@/components/Purchases/deleteBtn.vue";
+import { computed, onMounted, reactive, watch } from 'vue';
+import { useStore } from 'vuex';
+import updateBtn from '@/components/Purchases/updateBtn.vue';
+import deleteBtn from '@/components/Purchases/deleteBtn.vue';
 
 export default {
-  name: "PurchasesTable",
+  name: 'PurchasesTable',
   components: { updateBtn, deleteBtn },
 
   props: {
     searchInput: {
       type: String,
-      required: false,
+      required: false
     },
     pageSizeProp: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
 
   setup(props) {
     const store = useStore();
-    const content = computed(() => store.getters["PurchasesTable/GET_CONTENT"]);
+    const content = computed(() => store.getters['PurchasesTable/GET_CONTENT']);
 
     const state = reactive({
-      currentSort: "date",
-      currentSortDir: "asc",
+      currentSort: 'date',
+      currentSortDir: 'asc',
       pageSize: computed(() => {
         state.currentPage = 1;
         return props.pageSizeProp;
       }),
       currentPage: 1,
-      fromAndToDate: computed(() => store.getters["FromAndToDate/GET_DATE"]),
+      fromAndToDate: computed(() => store.getters['FromAndToDate/GET_DATE'])
     });
 
     onMounted(() => {
-      store.dispatch("CategoriesTable/SELECT_DATA");
+      store.dispatch('CategoriesTable/SELECT_DATA');
     });
 
     function sort(s) {
       if (s === state.currentSort) {
         //Change direction
-        state.currentSortDir = state.currentSortDir === "asc" ? "desc" : "asc";
+        state.currentSortDir = state.currentSortDir === 'asc' ? 'desc' : 'asc';
       } else {
         //Set currentSort to the clicked one
         state.currentSort = s;
-        state.currentSortDir = "asc";
+        state.currentSortDir = 'asc';
       }
       state.currentPage = 1;
     }
@@ -175,7 +175,7 @@ export default {
           //Sort filter
           .sort((a, b) => {
             let modifier = 1;
-            if (state.currentSortDir === "desc") modifier = -1;
+            if (state.currentSortDir === 'desc') modifier = -1;
             if (a[state.currentSort] < b[state.currentSort]) return -1 * modifier;
             if (a[state.currentSort] > b[state.currentSort]) return modifier;
             return 0;
@@ -241,9 +241,9 @@ export default {
       setPage,
       pageNums,
       state,
-      sortedForSearchContent,
+      sortedForSearchContent
     };
-  },
+  }
 };
 </script>
 

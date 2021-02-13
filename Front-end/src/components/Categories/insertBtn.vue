@@ -73,12 +73,12 @@
 </template>
 
 <script>
-import { computed, reactive, watch } from "vue";
-import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
+import { computed, reactive, watch } from 'vue';
+import { useStore } from 'vuex';
+import { useToast } from 'vue-toastification';
 
 export default {
-  name: "insertBtn",
+  name: 'insertBtn',
 
   setup() {
     const store = useStore();
@@ -91,15 +91,15 @@ export default {
         return {
           ID: 0,
           name: state.form[0],
-          description: state.form[1],
+          description: state.form[1]
         };
       }),
       invalidClassName: {
-        "is-invalid": false,
+        'is-invalid': false
       },
       invalidClassDescription: {
-        "is-invalid": false,
-      },
+        'is-invalid': false
+      }
     });
 
     //? Function for clearing form after submit
@@ -114,9 +114,9 @@ export default {
       //Callback
       (newShowModal) => {
         if (newShowModal) {
-          document.getElementsByTagName("body")[0].style = "overflow-y: hidden;";
+          document.getElementsByTagName('body')[0].style = 'overflow-y: hidden;';
         } else {
-          document.getElementsByTagName("body")[0].style = "overflow-y: scroll;";
+          document.getElementsByTagName('body')[0].style = 'overflow-y: scroll;';
         }
       }
     );
@@ -124,24 +124,24 @@ export default {
     //? fetch function
     async function insertCategory(jsonObject) {
       try {
-        toast.info("Adding...");
+        toast.info('Adding...');
 
-        const response = await fetch(store.getters["CategoriesTable/GET_URL"] + "/insert.php", {
-          method: "POST",
+        const response = await fetch(store.getters['CategoriesTable/GET_URL'] + '/insert.php', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(jsonObject),
+          body: JSON.stringify(jsonObject)
         });
 
         const message = await response.text();
         toast.success(message);
       } catch {
-        toast.error("Something went wrong.");
+        toast.error('Something went wrong.');
       } finally {
         state.showModal = false;
         ClearForm();
-        store.dispatch("CategoriesTable/SELECT_DATA");
+        store.dispatch('CategoriesTable/SELECT_DATA');
       }
     }
 
@@ -149,8 +149,8 @@ export default {
     watch(
       () => state.form[0],
       (newInput) => {
-        if (!/^[a-zA-Z\s]*$/.test(newInput) && newInput) state.invalidClassName["is-invalid"] = true;
-        else state.invalidClassName["is-invalid"] = false;
+        if (!/^[a-zA-Z\s]*$/.test(newInput) && newInput) state.invalidClassName['is-invalid'] = true;
+        else state.invalidClassName['is-invalid'] = false;
       }
     );
 
@@ -158,17 +158,17 @@ export default {
     watch(
       () => state.form[1],
       (newInput) => {
-        if (!/^[a-zA-Z0-9,.!? ]*$/.test(newInput) && newInput) state.invalidClassDescription["is-invalid"] = true;
-        else state.invalidClassDescription["is-invalid"] = false;
+        if (!/^[a-zA-Z0-9,.!? ]*$/.test(newInput) && newInput) state.invalidClassDescription['is-invalid'] = true;
+        else state.invalidClassDescription['is-invalid'] = false;
       }
     );
 
     return {
       state,
       ClearForm,
-      insertCategory,
+      insertCategory
     };
-  },
+  }
 };
 </script>
 
